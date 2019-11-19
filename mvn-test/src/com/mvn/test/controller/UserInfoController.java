@@ -32,7 +32,10 @@ public class UserInfoController extends HttpServlet {
 		}else if("view".equals(cmd)) {
 			UserInfoVO user = new UserInfoVO();
 			user.setUiNum(Integer.parseInt(request.getParameter("uiNum")));
+			System.out.println(user);
 			response.getWriter().print(gson.toJson(uis.getUser(user)));
+			
+			System.out.println(gson.toJson(uis.getUser(user)));
 		}
 
 	}

@@ -35,7 +35,6 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 
 		SqlSession ss = InitServlet.getSqlSession();
 		try {
-
 			int cnt = ss.insert("UserInfo.insertUser", user);
 			ss.commit();
 			return cnt;
@@ -97,7 +96,7 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 	public static void main(String[] args) { // 에러테스트
 		UserInfoDAO udao = new UserInfoDAOImpl();
 		UserInfoVO user = new UserInfoVO();
-		user.setUiNum(1);
+		user.setUiNum(12);
 		//user.setUiId("f1234");
 		System.out.println(udao.selectUser(user));
 		//Map<String, String> pUser = new HashMap<>();

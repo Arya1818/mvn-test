@@ -34,8 +34,8 @@
 		xhr.onreadystatechange = function(){
 			if(xhr.readyState==4){
 				if(xhr.status==200){
-					var res = JSON.parse(xhr.responseText);
-					alert(res.msg);
+					var res = JSON.parse(xhr.responseText); //return받은rMap
+					alert(res.msg); 
 					if(res.result=='true'){
 						goPage('/user/list');
 					}

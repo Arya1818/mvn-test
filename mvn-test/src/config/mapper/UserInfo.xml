@@ -17,7 +17,7 @@
 		from user_info
 		<where>
 			<if test="uiNum!=null">
-				and ui_num = #{uiNum}
+				ui_num = #{uiNum}
 			</if>
 		</where>
 	</select>
@@ -31,9 +31,9 @@
 
 	<select id="updateUser">
 		update user_info
-		set ui_name=#{uiName},
-		ui_pwd=#{uiPwd}, moddat = to_char(sysdate,'yyyymmdd'), modtim =
-		to_char(sysdate,'hh24miss')
+		set ui_name=#{uiName}, ui_pwd=#{uiPwd}, 
+		moddat = to_char(sysdate,'yyyymmdd'), 
+		modtim = to_char(sysdate,'hh24miss')
 		where ui_num=#{uiNum}
 	</select>
 
