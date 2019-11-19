@@ -1,7 +1,9 @@
 package com.mvn.test.controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,24 +16,45 @@ import com.mvn.test.service.UserInfoService;
 import com.mvn.test.service.Impl.UserInfoServiceImpl;
 import com.mvn.test.vo.UserInfoVO;
 
-
-@WebServlet(name = "UserInfoController", urlPatterns = {"/user/*"})
+@WebServlet(name = "UserInfoController", urlPatterns = { "/user/*" })
 public class UserInfoController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private UserInfoService uis = new UserInfoServiceImpl();
-    private Gson gson = new Gson();
-    
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private UserInfoService uis = new UserInfoServiceImpl();
+	private Gson gson = new Gson();
 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		response.setContentType("application/json;charset=utf-8");
-		List<UserInfoVO> uiList = uis.getUserList(null);
-		response.getWriter().print(gson.toJson(uiList));
+		String cmd = request.getRequestURI().substring(6);
+		if("list".equals(cmd)) {
+			List<UserInfoVO> uiList = uis.getUserList(null);
+			response.getWriter().print(gson.toJson(uiList));
+		}else if("view".equals(cmd)) {
+			UserInfoVO user = new UserInfoVO();
+			user.setUiNum(Integer.parseInt(request.getParameter("uiNum")));
+			response.getWriter().print(gson.toJson(uis.getUser(user)));
+		}
+
 	}
 
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		doGet(request, response);
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		response.setContentType("application/json;charset=utf-8");
+		BufferedReader br = request.getReader();
+		String str = null;
+		String json = "";
+		while ((str = br.readLine()) != null) {
+			json += str;
+		}
+		UserInfoVO user = gson.fromJson(json, UserInfoVO.class);
+		String cmd = request.getRequestURI().substring(6);
+		if ("signup".equals(cmd)) {
+			json = gson.toJson(uis.doSignup(user));
+		} else if ("update".equals(cmd)) {
+			json = gson.toJson(uis.updateUser(user));
+		} else if ("delete".equals(cmd)) {
+			json = gson.toJson(uis.deleteUser(user));
+		}
+		response.getWriter().print(json);
 	}
-
 }

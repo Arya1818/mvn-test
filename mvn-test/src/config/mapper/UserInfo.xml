@@ -4,12 +4,42 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="UserInfo">
-	<select id="selectUserList" resultType="com.mvn.test.vo.UserInfoVO">	
-		select ui_num "uiNum", ui_name "uiName", ui_id "uiId",
+	<select id="selectUserList"
+		resultType="com.mvn.test.vo.UserInfoVO">
+		select ui_num "uiNum", ui_name "uiName", ui_id "uiId", ui_pwd "uiPwd",
 		credat, cretim, moddat, modtim, active
- 		from user_info
+		from user_info
 	</select>
 
+	<select id="selectUser" resultType="com.mvn.test.vo.UserInfoVO">
+		select ui_num "uiNum", ui_name "uiName", ui_id "uiId", ui_pwd "uiPwd",
+		credat, cretim, moddat, modtim, active
+		from user_info
+		<where>
+			<if test="uiNum!=null">
+				and ui_num = #{uiNum}
+			</if>
+		</where>
+	</select>
 
+	<insert id="insertUser"
+		parameterType="com.mvn.test.vo.UserInfoVO" keyProperty="id">
+		insert into user_info(ui_num, ui_name, ui_id, ui_pwd, credat, cretim, moddat, modtim)
+		values(seq_ui_num.nextval, #{uiName}, #{uiId}, #{uiPwd}, 
+		to_char(sysdate,'yyyymmdd'),to_char(sysdate,'hh24miss'),to_char(sysdate,'yyyymmdd'),to_char(sysdate,'hh24miss'))
+	</insert>
+
+	<select id="updateUser">
+		update user_info
+		set ui_name=#{uiName},
+		ui_pwd=#{uiPwd}, moddat = to_char(sysdate,'yyyymmdd'), modtim =
+		to_char(sysdate,'hh24miss')
+		where ui_num=#{uiNum}
+	</select>
+
+	<delete id="deleteUser">
+		delete from user_info
+		where ui_num=#{uiNum}
+	</delete>
 
 </mapper>

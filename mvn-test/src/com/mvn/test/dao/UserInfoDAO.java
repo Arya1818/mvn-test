@@ -7,4 +7,10 @@ import com.mvn.test.vo.UserInfoVO;
 
 public interface UserInfoDAO {
 	public List<UserInfoVO> selectUserList(Map<String,String> pUser);
+	public int insertUser(UserInfoVO user);
+	public int deleteUser(UserInfoVO user);
+	public int updateUser(UserInfoVO user);
+	public UserInfoVO selectUser(UserInfoVO user);
+
+
 }
