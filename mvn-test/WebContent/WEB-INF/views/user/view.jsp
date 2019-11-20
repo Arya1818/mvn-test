@@ -114,6 +114,7 @@
 			param = JSON.stringify(param)
 			xhr.send(param);
 		}
+		
 	</script>
 </body>
 </html>

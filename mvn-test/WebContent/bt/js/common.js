@@ -6,6 +6,9 @@ function goPage(url) {
 	location.href = '/views' + url;
 
 }
+function goGo(url){
+	location.href = url;
+}
 
 function ajax(conf){
 	var xhr = new XMLHttpRequest();
