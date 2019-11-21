@@ -6,7 +6,7 @@
 <mapper namespace="PhotoBoard">
 	
 	<resultMap type="com.mvn.test.vo.PhotoBoardVO" id="pb">
-		<result property="pbContent" column="pb_content" jdbcType="CLOB" javaType="string"/>
+		<result property="pbContent" column="pb_content" jdbcType="CLOB" javaType="String"/>
 	</resultMap>
 
 	<select id="selectBoardList" resultMap="pb">
@@ -17,7 +17,7 @@
 	</select>
 	
 	<select id="selectBoard" resultType="com.mvn.test.vo.PhotoBoardVO">
-	select PB_NUM "pbNum", PB_TITLE "pbTitle", PB_CONTENT "pbContent", 
+	select PB_NUM "pbNum", PB_TITLE "pbTitle", PB_CONTENT, 
 	PB_IMG1	"pbImg1", PB_IMG2 "pbImg2", 
 	CREDAT, CRETIM, CREUSR, MODDAT,	MODTIM,	MODUSR,	PB_CNT
 	from photo_board

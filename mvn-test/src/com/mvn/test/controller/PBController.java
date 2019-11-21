@@ -31,7 +31,8 @@ public class PBController extends HttpServlet {
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("application/json;charset=utf-8");
-		String cmd = request.getRequestURI().substring(7);
+		
+		//String cmd = request.getRequestURI().substring(7);
 		//if("list".equals(cmd)) {
 			List<PhotoBoardVO> pbList = pbs.getBoardList(null);
 			response.getWriter().print(gson.toJson(pbList));

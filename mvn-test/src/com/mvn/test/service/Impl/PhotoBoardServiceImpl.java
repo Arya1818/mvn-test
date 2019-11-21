@@ -16,9 +16,10 @@ import com.mvn.test.vo.PhotoBoardVO;
 
 
 public class PhotoBoardServiceImpl implements PhotoBoardService {
+	
 	private PhotoBoardDAO pbdao = new PhotoBoardDAOImpl();
 	private String path = "C:\\Users\\Administrator\\git\\mvn-test\\mvn-test\\WebContent\\img\\";
-
+	
 	@Override
 	public List<PhotoBoardVO> getBoardList(Map<String, String> board) {
 		
@@ -44,10 +45,10 @@ public class PhotoBoardServiceImpl implements PhotoBoardService {
 			Map<String,String> photoBoard = new HashMap<>();
 			photoBoard.put("pbTitle", pbTitle);
 			photoBoard.put("pbContent", pbContent);
-			photoBoard.put("ftId", ftName);
-			photoBoard.put("ftFile", "/img/" + fi.getName()); //file이름
+			photoBoard.put("pbImg1", "/img/" + fi.getName()); //file이름
+			photoBoard.put("pbImg2", "/img/" + fi.getName());
 			
-			int cnt = ftdao.insertFileTest(ss, fileTest);
+			int cnt = pbdao.insertBoard(board);
 			if(cnt!=1) {
 				throw new Exception("저장 안됨!");
 			}

@@ -19,9 +19,13 @@
 				<th>이미지2</th>
 				<th>조회수</th>
 			</tr>
+			<tr>
+				<button onclick="goPage()">등록하기</button>
+			</tr>
 			<tbody id="tBody">
 
 			</tbody>
+			
 		</table>
 	</div>
 	<script>
@@ -39,8 +43,8 @@
 						html += '<td>' + b.pbNum + '</td>';
 						html += '<td>' + b.pbTitle + '</td>';
 						html += '<td>' + b.pbContent + '</td>';
-						html += '<td>' + b.pbImg1 + '</td>';
-						html += '<td>' + b.pbImg2 + '</td>';
+						html += '<td><img src="' + b.pbImg1 + '" width=150></td>';
+						html += '<td><img src="' + b.pbImg2 + '" width=150></td>';
 						html += '<td>' + b.pbCnt + '</td>';
 						html += '</tr>';
 					}
