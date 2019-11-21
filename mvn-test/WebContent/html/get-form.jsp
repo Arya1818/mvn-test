@@ -7,8 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-<a href="/views/user/list">USERLIST가기</a>
-<a href="/views/board/list">PhotoList가기</a>
-<a href="/views/user/signup">회원가입</a>
+<form action="/getForm">
+	<input type="text" name="name">
+	<button>전송</button>
+</form>
 </body>
 </html>

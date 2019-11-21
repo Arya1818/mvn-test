@@ -1,5 +1,6 @@
 package com.mvn.test.controller;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -17,32 +18,31 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import com.google.gson.Gson;
-import com.mvn.test.service.FileTestService;
-import com.mvn.test.service.Impl.FileTestServiceImpl;
-import com.mvn.test.vo.FileTestVO;
+import com.mvn.test.service.PhotoBoardService;
+import com.mvn.test.service.Impl.PhotoBoardServiceImpl;
+import com.mvn.test.vo.PhotoBoardVO;
 
-@WebServlet("/file2/*")
-public class FileServlet2 extends HttpServlet {
+
+@WebServlet(name="PBController", urlPatterns= {"/board/*"})
+public class PBController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private FileTestService fs = new FileTestServiceImpl();
+	private PhotoBoardService pbs = new PhotoBoardServiceImpl();
 	private Gson gson = new Gson();
-	
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("application/json;charset=utf-8");
 		String cmd = request.getRequestURI().substring(7);
-		if("fileList".equals(cmd)) {
-			response.getWriter().print(gson.toJson(fs.getFileList()));	
-		}else if("fileView".equals(cmd)) {
-			FileTestVO file = new FileTestVO();
-			file.setFtNum(Integer.parseInt(request.getParameter("ftNum")));
-			System.out.println(file);
-			response.getWriter().print(gson.toJson(file));
-		}
+		//if("list".equals(cmd)) {
+			List<PhotoBoardVO> pbList = pbs.getBoardList(null);
+			response.getWriter().print(gson.toJson(pbList));
+			
+			System.out.println(gson.toJson(pbList));
 		
-		System.out.println(gson.toJson(fs.getFileList()));
+		
 	}
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		response.setContentType("application/json;charset=utf-8");
 		int memorySize = 1024 * 1024 * 5; // 5MB
 		int totalSize = 1024 * 1024 * 400; // 50MB
@@ -69,7 +69,7 @@ public class FileServlet2 extends HttpServlet {
 					}
 					
 				}
-				fs.insertFileTest(param);
+				pbs.insertBoard(board);
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -78,8 +78,6 @@ public class FileServlet2 extends HttpServlet {
 			throw new ServletException("파일형식잘못됨");
 
 		}
-	
-	
 	}
 
 }

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	아이디 : <input type="text" id="ftId"><br>
+	이름 : <input type="text" id="ftName"><br>
+	파일 : <input type="file" id="ftFile"><br>
+	<button onclick="upload()">업로드</button>
+
+<progress id="pro" value="0" max="100"></progress>
+<div id="rDiv"></div>
+<script>
+/* window.onload = function(){
+	alert(1);
+}
+window.onload = function(){
+	alert(2);
+}
+window.addEventListener('load',f1); //load이벤트가 발생할때마다 f1을 호출
+window.addEventListener('load',f1);  */
+
+function upload(){
+	var ftFile = document.querySelector('#ftFile');
+	console.log(ftFile.files[0]);
+	var pro = document.querySelector('#pro');
+	var rDiv = document.querySelector('#rDiv');
+	var formData = new FormData(); //바뀐부분
+	formData.append('ftId',document.querySelector('#ftId').value);
+	formData.append('ftName',document.querySelector('#ftName').value);
+	formData.append('ftFile',ftFile.files[0]);
+	
+	var xhr = new XMLHttpRequest();
+	xhr.upload.addEventListener('progress',function(evt){ //progress이벤트가 발생할때마다 function을 호출, evt는 내가만든변수명?
+		var per = (evt.loaded/evt.total)*100;
+		pro.value = per
+		rDiv.innerHTML = per + "%";
+		console.log(evt);
+	})
+	xhr.open('POST','/file2');
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState==xhr.DONE){
+			if(xhr.status==200){
+				
+			}
+		}
+	}
+	xhr.send(formData);
+}	
+</script>
+</body>
+</html>
