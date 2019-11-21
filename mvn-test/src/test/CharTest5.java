@@ -44,5 +44,5 @@ public class CharTest5 {
 // 콘솔에 출력되는값 - 우리가 input을 한 것
 // I/O중요
 
-//test1이라는 파일이 하나 생김. BufferedReader로 읽어서 BufferedWriterfh 씀
+//test1이라는 파일이 하나 생김. BufferedReader로 읽어서 BufferedWriter 씀
 //printWriter할때함. getParameter도 reader가 일어나는거였음. 전화기  
