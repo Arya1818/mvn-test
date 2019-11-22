@@ -6,6 +6,21 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <jsp:include page="/WEB-INF/views/common/head.jsp"></jsp:include>
+<style>
+h2 {
+	display: block;
+	font-size: 1.5em;
+	font-weight: bold;
+	margin-bottom: 1.5em;
+}
+body {
+	display: block;
+	margin-top: 2em;
+	margin-bottom: 2em;
+	margin-left: 2em;
+	margin-right: 2em;
+}
+</style>
 </head>
 <body>
 	<div class="container">
@@ -20,7 +35,7 @@
 				<th>조회수</th>
 			</tr>
 			<tr>
-				<button onclick="goPage()">등록하기</button>
+				<button onclick="goPage('/board/insert')">등록하기</button>
 			</tr>
 			<tbody id="tBody">
 
@@ -43,8 +58,8 @@
 						html += '<td>' + b.pbNum + '</td>';
 						html += '<td>' + b.pbTitle + '</td>';
 						html += '<td>' + b.pbContent + '</td>';
-						html += '<td><img src="' + b.pbImg1 + '" width=150></td>';
-						html += '<td><img src="' + b.pbImg2 + '" width=150></td>';
+						html += '<td><img src="/img/' + b.pbImg1 + '" width=150></td>';
+						html += '<td><img src="/img/' + b.pbImg2 + '" width=150></td>';
 						html += '<td>' + b.pbCnt + '</td>';
 						html += '</tr>';
 					}

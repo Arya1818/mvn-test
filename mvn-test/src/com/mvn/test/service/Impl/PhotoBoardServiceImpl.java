@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.ibatis.session.SqlSession;
 
+import com.mvn.test.common.ServletFileUtil;
 import com.mvn.test.controller.InitServlet;
 import com.mvn.test.dao.PhotoBoardDAO;
 import com.mvn.test.dao.Impl.PhotoBoardDAOImpl;
@@ -21,39 +22,56 @@ public class PhotoBoardServiceImpl implements PhotoBoardService {
 	private String path = "C:\\Users\\Administrator\\git\\mvn-test\\mvn-test\\WebContent\\img\\";
 	
 	@Override
-	public List<PhotoBoardVO> getBoardList(Map<String, String> board) {
+	public List<PhotoBoardVO> getBoardList(PhotoBoardVO board) {
 		
-		return pbdao.selectBoardList(board);
+		SqlSession ss = InitServlet.getSqlSession();
+		
+		try {
+			return pbdao.selectBoardList(ss, board);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			ss.close();
+		}
+		return null;
 	}
+		
 
 	@Override
-	public PhotoBoardVO getBoard(PhotoBoardVO board) {
+	public PhotoBoardVO getBoard(int pbNum) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Map<String, String> insertBoard(PhotoBoardVO board) {
+	public Map<String, String> insertBoard(Map<String,Object> param) {
+		
+		PhotoBoardVO pb = new PhotoBoardVO();
+		pb.setPbTitle((String)param.get("pbTitle"));
+		pb.setPbContent((String)param.get("pbContent"));
+		pb.setCreusr(Integer.parseInt((String)param.get("creusr")));
 		SqlSession ss = InitServlet.getSqlSession();
 		
+		Map<String,String> rMap = new HashMap<>();
+		rMap.put("msg","실패");
+		rMap.put("result","false");
+		
 		try {
-			String pbTitle = (String)param.get("pbTitle");
-			String pbContent = (String)param.get("pbContent");
-			FileItem pbImg1 = (FileItem)param.get("pbImg1");
-			FileItem pbImg2 = (FileItem)param.get("pbImg2");
-			
-			Map<String,String> photoBoard = new HashMap<>();
-			photoBoard.put("pbTitle", pbTitle);
-			photoBoard.put("pbContent", pbContent);
-			photoBoard.put("pbImg1", "/img/" + fi.getName()); //file이름
-			photoBoard.put("pbImg2", "/img/" + fi.getName());
-			
-			int cnt = pbdao.insertBoard(board);
-			if(cnt!=1) {
-				throw new Exception("저장 안됨!");
+			if(param.get("pbImg1")!=null) {
+				FileItem fi = (FileItem)param.get("pbImg1");
+				String fileName = ServletFileUtil.saveFile(fi);
+				pb.setPbImg1(fileName);
 			}
-			File targetFile = new File(path + fi.getName());
-			fi.write(targetFile);
+			if(param.get("pbImg2")!=null) {
+				FileItem fi = (FileItem)param.get("pbImg2");
+				String fileName = ServletFileUtil.saveFile(fi);
+				pb.setPbImg2(fileName);
+			}
+			int cnt = pbdao.insertBoard(ss, pb);
+			if(cnt==1) {
+				rMap.put("msg","성공");
+				rMap.put("result","true");
+			}
 			ss.commit();
 			
 		}catch(Exception e){
@@ -62,8 +80,8 @@ public class PhotoBoardServiceImpl implements PhotoBoardService {
 		}finally {
 			ss.close();
 		}
-		
-		return null;
+		//System.out.println(pb);
+		return rMap;
 	}
 
 	@Override
@@ -76,7 +94,6 @@ public class PhotoBoardServiceImpl implements PhotoBoardService {
 	public Map<String, String> updateBoard(PhotoBoardVO board) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
+	}	
 	
 }

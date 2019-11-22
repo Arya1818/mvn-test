@@ -29,11 +29,13 @@
 					<div id="pDiv2"></div></td>
 			</tr>
 			<tr>
-				<th colspan="2"><button onclick="upload()">등록</button></th>
+				<th colspan="2"><button onclick="submit()">등록</button></th>
 			</tr>
 		</table>
 		<script>
-			function upload() {
+		
+			function submit() {
+					
 				var pbImg1 = document.querySelector('#pbImg1');
 				var pbImg2 = document.querySelector('#pbImg2');
 				console.log(pbImg1.files[0]);
@@ -45,8 +47,8 @@
 				var fd = new FormData();
 				fd.append('pbTitle', document.querySelector('#pbTitle').value);
 				fd.append('pbContent', document.querySelector('#pbContent').value);
-				fd.append('pbImg1', pbImg1.files[0]);
-				fd.append('pbImg2', pbImg2.files[0]);
+				fd.append('pbImg1', document.querySelector('#pbImg1').files[0]);
+				fd.append('pbImg2', document.querySelector('#pbImg2').files[0]);
 
 				var xhr = new XMLHttpRequest();
 
