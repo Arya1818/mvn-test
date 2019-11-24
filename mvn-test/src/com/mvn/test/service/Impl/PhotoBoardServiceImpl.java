@@ -39,8 +39,8 @@ public class PhotoBoardServiceImpl implements PhotoBoardService {
 
 	@Override
 	public PhotoBoardVO getBoard(int pbNum) {
-		// TODO Auto-generated method stub
-		return null;
+		SqlSession ss = InitServlet.getSqlSession();
+		return pbdao.selectBoard(ss, pbNum);
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class PhotoBoardServiceImpl implements PhotoBoardService {
 		}finally {
 			ss.close();
 		}
-		//System.out.println(pb);
+		System.out.println(pb);
 		return rMap;
 	}
 

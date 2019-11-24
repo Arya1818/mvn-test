@@ -34,22 +34,30 @@ public class PBController extends HttpServlet {
 		response.setContentType("application/json;charset=utf-8");
 		
 		String cmd = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/")+1);
+		//    views/board/list
 		String json = "";
 		if("list".equals(cmd)) {
 			json = gson.toJson(pbs.getBoardList(null));	
 		}else if("view".equals(cmd)) {
-			
+			json = gson.toJson(pbs.getBoard(Integer.parseInt(request.getParameter("pbNum"))));
 		}
 		response.getWriter().print(json);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		Map<String,Object> param = ServletFileUtil.parseRequest(request);
-		Map<String,String> rMap = pbs.insertBoard(param);
-		System.out.println(rMap);
+		String cmd = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/")+1);
+		response.setContentType("application/json;charset=utf-8");
+		String json = "";
+		if("insert".equals(cmd)) {
+			Map<String,Object> param = ServletFileUtil.parseRequest(request);
+			Map<String,String> rMap = pbs.insertBoard(param);
+		}else if ("delete".equals(cmd)) {
+			json = g.toJson(pbs.deleteBoard(Integer.parseInt(request.getParameter("pbNum"))));
+		} else if ("update".equals(cmd)) {
+			Map<String, Object> param = ServletFileUtil.parseRequest(request);
+			param.put("pbNum", request.getParameter("pbNum"));
 	
 
 		}
 	}
-
+}

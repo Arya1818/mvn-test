@@ -27,7 +27,6 @@
 	
 	<insert id="insertBoard" parameterType="com.mvn.test.vo.PhotoBoardVO" >
 	insert into photo_board
-
 	values(SEQ_pb_num.nextval, #{pbTitle}, #{pbContent}, #{pbImg1}, #{pbImg2},
 	to_char(sysdate,'yyyymmdd'),to_char(sysdate,'hh24miss'), #{creusr}, 
 	to_char(sysdate,'yyyymmdd'),to_char(sysdate,'hh24miss'), #{creusr}, 0)
@@ -36,19 +35,19 @@
 	<update id="updateBoard"> <!-- 이거할때다시보기 -->
 		update photo_board
 		<set>
-			<if test='pbTitle!=null'>
-			,pb_title=#{pbTitle}
-			</if>
-			<if test='pbContent!=null'>
-			,pb_count=#{pbContent}
-			</if>
-			<if test='pbCnt!=null'>
-			,pb_cnt=#{pbCnt} + 1
-			</if>
-		</set>
-		set pb_title=#{pbTitle}, pb_content=#{pbContent},
 		moddat = to_char(sysdate,'yyyymmdd'),
 		modtim = to_char(sysdate,'hh24miss')
+
+			<if test='pbTitle!=null'>
+			, pb_title = #{pbTitle}
+			</if>
+			<if test='pbContent!=null'>
+			, pb_content = #{pbContent}
+			</if>
+			<if test='pbCnt!=null'>
+			, pb_cnt = pb_cnt+1 
+			</if>
+		</set>
 		where pb_num=#{pbNum}
 	</update>
 	

@@ -32,8 +32,8 @@ public class PhotoBoardDAOImpl implements PhotoBoardDAO {
 	@Override
 	public int insertBoard(SqlSession ss, PhotoBoardVO board) {
 
-		int cnt = ss.insert("PhotoBoard.insertBoard", board);
-		return cnt;	
+		return ss.insert("PhotoBoard.insertBoard", board);
+		
 	}
 
 	@Override
@@ -54,15 +54,15 @@ public class PhotoBoardDAOImpl implements PhotoBoardDAO {
 	public static void main(String[] args) {
 		PhotoBoardDAO pbdao = new PhotoBoardDAOImpl();
 		SqlSession ss = InitServlet.getSqlSession();
-		PhotoBoardVO pb = new PhotoBoardVO();
-		//pb.setPbTitle("업데이트제목");
-		//pb.setPbContent("업데이트내용");
-		//pb.setCreusr(1);	
-		//pb.setPbNum(27);
-		System.out.println(pbdao.selectBoardList(ss, null));
+		PhotoBoardVO board = new PhotoBoardVO();
+		board.setPbTitle("또또??");
+		board.setPbContent("또업데이트내용??");
+		board.setCreusr(2);	
+		board.setPbNum(11);
+		//System.out.println(pbdao.selectBoardList(ss, null));
 		//System.out.println(pbdao.insertBoard(ss, board));
-		//System.out.println(pbdao.insertBoard(ss, board));
-		//System.out.println(pbdao.insertBoard(ss, board));
+		System.out.println(pbdao.updateBoard(ss, board));
+		//System.out.println(pbdao.deleteBoard(ss, board));
 		
 	}
 

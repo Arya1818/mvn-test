@@ -4,7 +4,9 @@ import org.apache.commons.fileupload.FileItem;
 
 import lombok.Data;
 
+
 @Data
+
 public class PhotoBoardVO {
 	private Integer pbNum; 
 	private String pbTitle;
@@ -20,5 +22,5 @@ public class PhotoBoardVO {
 	private String modtim;
 	private Integer modusr;
 	private Integer pbCnt;
-	
+
 }

@@ -35,7 +35,7 @@ body {
 				<th>조회수</th>
 			</tr>
 			<tr>
-				<button onclick="goPage('/board/insert')">등록하기</button>
+				<button onclick="goPage('/board/insert2')">등록하기</button>
 			</tr>
 			<tbody id="tBody">
 
@@ -54,7 +54,7 @@ body {
 					console.log(board);
 					var html='';
 					for(var b of board){
-						html += '<tr>';
+						html += '<tr onclick="goPage(\'/board/view?pbNum=' + b.pbNum + '\')">';
 						html += '<td>' + b.pbNum + '</td>';
 						html += '<td>' + b.pbTitle + '</td>';
 						html += '<td>' + b.pbContent + '</td>';
