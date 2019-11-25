@@ -48,11 +48,18 @@ public class PBController extends HttpServlet {
 		String cmd = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/")+1);
 		response.setContentType("application/json;charset=utf-8");
 		String json = "";
+		PhotoBoardVO pb;
+		try {
+			pb = (PhotoBoardVO)ServletFileUtil.parseRequest(request,PhotoBoardVO.class);
+		}
+		
 		if("insert".equals(cmd)) {
+			
+			
 			Map<String,Object> param = ServletFileUtil.parseRequest(request);
 			Map<String,String> rMap = pbs.insertBoard(param);
 		}else if ("delete".equals(cmd)) {
-			json = g.toJson(pbs.deleteBoard(Integer.parseInt(request.getParameter("pbNum"))));
+			json = gson.toJson(pbs.deleteBoard(Integer.parseInt(request.getParameter("pbNum"))));
 		} else if ("update".equals(cmd)) {
 			Map<String, Object> param = ServletFileUtil.parseRequest(request);
 			param.put("pbNum", request.getParameter("pbNum"));
