@@ -27,6 +27,8 @@
 </table>
 
 <script>
+
+
 	function save(){
 		var xhr = new XMLHttpRequest();
 		xhr.open('POST','/user/signup');
